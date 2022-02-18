@@ -25,7 +25,7 @@ const searchOption = {
 
 refs.form.addEventListener('submit', onFormSubmit);
 refs.loadMoreBtn.addEventListener('click', loadMore);
-refs.clearBtn.addEventListener('click', clearInterface);
+// refs.clearBtn.addEventListener('click', clearInterface);
 
 let gallery = new SimpleLightbox('.gallery a', {
   showCounter: true,
