@@ -41,9 +41,15 @@ function onCardClick(evt) {
 async function onFormSubmit(e) {
   e.preventDefault();
   searchOption.params.page = 0;
+  const inputValue = e.currentTarget.searchQuery.value.trim();
+  if (!inputValue.length) {
+    Notify.failure('Enter something');
+    return;
+  }
   try {
-    const collection = await getColection(e.currentTarget.searchQuery.value);
+    const collection = await getColection(inputValue);
     onSucces(collection);
+    checkTotalHits(collection);
   } catch {
     Notify.failure('Sorry, there are no images matching your search query. Please try again.');
   }
@@ -103,6 +109,14 @@ function smoothScroll() {
     top: cardHeight * 2 + 180,
     behavior: 'smooth',
   });
+}
+
+function checkTotalHits(totalHits) {
+  const total = document.querySelectorAll('.photo-card').length;
+  if (total >= totalHits) {
+    refs.loadMoreBtn.classList.remove('visually-hidden');
+    Notiflix.Notify.info("We're sorry, but you've reached the end of search results.");
+  }
 }
 
 function makeMarkUp({ data }) {
